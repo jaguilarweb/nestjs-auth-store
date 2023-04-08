@@ -7,12 +7,15 @@ import {
   Body,
   Param,
   Query,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
   //Endpoints, todos antecedidos por http://localhost:3000/products/
   @Get()
+  @HttpCode(HttpStatus.OK)
   getProducts() {
     return {
       message: 'All products',
@@ -38,6 +41,7 @@ export class ProductsController {
   }
   //Rutas dinámicas van después de las rutas fijas
   @Get(':id')
+  @HttpCode(HttpStatus.ACCEPTED)
   getProduct(@Param('id') id: string) {
     return {
       message: 'Product',
