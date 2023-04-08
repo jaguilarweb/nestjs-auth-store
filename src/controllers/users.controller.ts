@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from '../services/users.service';
+import { ParseIntPipe } from '../shared/parse-int.pipe';
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -19,8 +20,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
 
   @Post()
@@ -29,12 +30,12 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: any) {
-    return this.usersService.update(+id, payload);
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+    return this.usersService.update(id, payload);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.delete(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.delete(id);
   }
 }
