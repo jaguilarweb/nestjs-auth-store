@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CategoryEntity } from '../entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
   private counterId = 1;
-  private categories = [
+  private categories: CategoryEntity[] = [
     {
       id: 1,
       name: 'Category 1',
@@ -11,16 +12,16 @@ export class CategoriesService {
     },
   ];
 
-  findAll() {
+  findAll(): CategoryEntity[] {
     return this.categories;
   }
 
-  findOne(id: number) {
+  findOne(id: number): CategoryEntity {
     const category = this.categories.find((item) => item.id === id);
     return category;
   }
 
-  create(payload: any) {
+  create(payload: any): CategoryEntity {
     this.counterId = this.counterId + 1;
     const newCategory = {
       id: this.counterId,
@@ -43,7 +44,7 @@ export class CategoriesService {
     return this.categories[index];
   }
 
-  delete(id: number) {
+  delete(id: number): boolean {
     const index = this.categories.findIndex((item) => item.id === id);
     if (index <= -1) {
       throw new NotFoundException(`Category #${id} not found`);
