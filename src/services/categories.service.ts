@@ -18,6 +18,9 @@ export class CategoriesService {
 
   findOne(id: number): CategoryEntity {
     const category = this.categories.find((item) => item.id === id);
+    if (!category) {
+      throw new NotFoundException(`Category #${id} not found`);
+    }
     return category;
   }
 
