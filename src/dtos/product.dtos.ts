@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsUrl, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsUrl,
+  IsNotEmpty,
+  IsPositive,
+} from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
 export class CreateProductDtos {
@@ -10,9 +16,11 @@ export class CreateProductDtos {
   readonly description: string;
   @IsNumber()
   @IsNotEmpty()
+  @IsPositive()
   readonly price: number;
   @IsNumber()
   @IsNotEmpty()
+  @IsPositive()
   readonly stock: number;
   @IsUrl()
   @IsNotEmpty()
