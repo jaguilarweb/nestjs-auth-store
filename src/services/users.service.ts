@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { UserEntity } from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,11 +13,11 @@ export class UsersService {
     },
   ];
 
-  findAll() {
+  findAll(): UserEntity[] {
     return this.users;
   }
 
-  findOne(id: number) {
+  findOne(id: number): UserEntity {
     const user = this.users.find((item) => item.id === id);
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
@@ -24,7 +25,7 @@ export class UsersService {
     return user;
   }
 
-  create(payload: any) {
+  create(payload: any): UserEntity {
     this.counterId = this.counterId + 1;
     const newUser = {
       id: this.counterId,
@@ -42,5 +43,14 @@ export class UsersService {
       ...payload,
     };
     return this.users[index];
+  }
+
+  delete(id: number): boolean {
+    const index = this.users.findIndex((item) => item.id === id);
+    if (index <= -1) {
+      throw new NotFoundException(`User #${id} not found`);
+    }
+    this.users.splice(index, 1);
+    return true;
   }
 }
