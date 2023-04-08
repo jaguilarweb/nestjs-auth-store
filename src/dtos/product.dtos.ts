@@ -1,4 +1,5 @@
 import { IsString, IsNumber, IsUrl, IsNotEmpty } from 'class-validator';
+//La activación de las validaciones se realiza en el archivo main.ts
 
 export class CreateProductDtos {
   @IsString()
