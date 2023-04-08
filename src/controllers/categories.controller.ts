@@ -7,47 +7,34 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
+import { CategoriesService } from '../services/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
+  constructor(private categoriesService: CategoriesService) {}
   // Endpoints
   @Get()
   getAll() {
-    return {
-      message: 'Categorias',
-    };
+    return this.categoriesService.findAll();
   }
 
   @Get(':id')
   getOne(@Param('id') id: string) {
-    return {
-      message: 'Categoria',
-      id,
-    };
+    return this.categoriesService.findOne(+id);
   }
 
   @Post()
   create(@Body() payload: any) {
-    return {
-      message: 'Categoria creada',
-      payload,
-    };
+    return this.categoriesService.create(payload);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() payload: any) {
-    return {
-      message: 'Categoria actualizada',
-      id,
-      payload,
-    };
+    return this.categoriesService.update(+id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return {
-      message: 'Categoria eliminada',
-      id,
-    };
+    return this.categoriesService.delete(+id);
   }
 }
