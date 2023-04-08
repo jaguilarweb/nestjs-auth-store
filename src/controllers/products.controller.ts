@@ -11,15 +11,17 @@ import {
   HttpCode,
 } from '@nestjs/common';
 
+import { ProductsService } from '../services/products.service';
+
 @Controller('products')
 export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+
   //Endpoints, todos antecedidos por http://localhost:3000/products/
   @Get()
   @HttpCode(HttpStatus.OK)
   getProducts() {
-    return {
-      message: 'All products',
-    };
+    return this.productsService.findAll();
   }
 
   @Get('queries')
@@ -43,34 +45,21 @@ export class ProductsController {
   @Get(':id')
   @HttpCode(HttpStatus.ACCEPTED)
   getProduct(@Param('id') id: string) {
-    return {
-      message: 'Product',
-      id,
-    };
+    return this.productsService.findOne(+id);
   }
 
   @Post()
   create(@Body() payload: any) {
-    return {
-      message: 'Create product',
-      payload,
-    };
+    return this.productsService.create(payload);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() payload: any) {
-    return {
-      message: 'Update product',
-      id,
-      payload,
-    };
+    return this.productsService.update(+id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return {
-      message: 'Delete product',
-      id,
-    };
+    return this.productsService.delete(+id);
   }
 }
