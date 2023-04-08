@@ -8,45 +8,33 @@ import {
   Body,
 } from '@nestjs/common';
 
-/* import { UsersService } from '../services/users.service'; */
+import { UsersService } from '../services/users.service';
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
   // Endpoints
   @Get()
   getAll() {
-    /*     return this.categoriesUsers.findAll(); */
+    return this.usersService.findAll();
   }
 
   @Get(':id')
   getOne(@Param('id') id: string) {
-    return {
-      message: 'Usuario',
-      id,
-    };
+    return this.usersService.findOne(+id);
   }
 
   @Post()
   create(@Body() payload: any) {
-    return {
-      message: 'Usuario creado',
-      payload,
-    };
+    return this.usersService.create(payload);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() payload: any) {
-    return {
-      message: 'Usuario actualizado',
-      id,
-      payload,
-    };
+    return this.usersService.update(+id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return {
-      message: 'Usuario eliminado',
-      id,
-    };
+    return this.usersService.delete(+id);
   }
 }
