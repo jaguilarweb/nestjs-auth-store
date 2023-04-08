@@ -8,14 +8,13 @@ import {
   Body,
 } from '@nestjs/common';
 
+/* import { UsersService } from '../services/users.service'; */
 @Controller('users')
 export class UsersController {
   // Endpoints
   @Get()
   getAll() {
-    return {
-      message: 'Todos los Usuarios',
-    };
+    /*     return this.categoriesUsers.findAll(); */
   }
 
   @Get(':id')

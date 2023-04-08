@@ -18,6 +18,7 @@ export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
   //Endpoints, todos antecedidos por http://localhost:3000/products/
+  //El manejo de HttpsCode y Status es opcional según el proyecto.
   @Get()
   @HttpCode(HttpStatus.OK)
   getProducts() {
