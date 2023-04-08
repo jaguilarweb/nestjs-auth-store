@@ -7,6 +7,8 @@ import {
 } from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
+import { PartialType } from '@nestjs/mapped-types';
+
 export class CreateProductDtos {
   @IsString()
   @IsNotEmpty()
@@ -27,10 +29,11 @@ export class CreateProductDtos {
   readonly image: string;
 }
 
-export class UpdateProductDtos {
-  readonly name?: string;
-  readonly description?: string;
-  readonly price?: number;
-  readonly stock?: number;
-  readonly image?: string;
-}
+// Personalizar respuesta
+/* export class Dto {
+  @IsNotEmpty()
+  @IsString({message: 'My custom message'})
+  name: string;
+} */
+
+export class UpdateProductDtos extends PartialType(CreateProductDtos) {}
