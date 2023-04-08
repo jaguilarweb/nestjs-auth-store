@@ -9,6 +9,7 @@ import {
   Query,
   HttpStatus,
   HttpCode,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { ProductsService } from '../services/products.service';
@@ -43,10 +44,13 @@ export class ProductsController {
     };
   }
   //Rutas dinámicas van después de las rutas fijas
+  //Estamos recibiendo parametros en forma de string,
+  //por lo que usamos un pipe para transformar la id en número.
+  //Y luego puedo cambiar el tipeo de id: string por id:number.
   @Get(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  getProduct(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  getProduct(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @Post()
@@ -55,12 +59,12 @@ export class ProductsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: any) {
-    return this.productsService.update(+id, payload);
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+    return this.productsService.update(id, payload);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.delete(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.delete(id);
   }
 }
