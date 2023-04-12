@@ -14,7 +14,8 @@ Los providers pueden ser clases o valores.
 
 **Providers**
 
-- Use Value: es un valor. Se usa por ejemplo para API_KEY
+- Use Value: es un valor. Se usa por ejemplo para testing y conexiones.
+- Use Factory: es una función que devuelve un valor. Se usa por ejemplo para crear una conexión a la base de datos.
 - 
 
 
