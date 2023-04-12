@@ -1,3 +1,14 @@
+# Curso NESTJS Programación Modular, Documentación con Swagger y Deploy
+
+## Descripción
+Este curso incorpora la buenas prácticas como es separar la programacion en diferentes módulos, para que cuando escale la aplicación sea más comprensible y mantenible.
+
+
+
+## Módulos
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from '../services/users.service';
-import { ParseIntPipe } from '../shared/parse-int.pipe';
+import { ParseIntPipe } from '../../shared/parse-int.pipe';
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
