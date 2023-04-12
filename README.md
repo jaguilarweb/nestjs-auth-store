@@ -8,6 +8,15 @@ Este curso incorpora la buenas prácticas como es separar la programacion en dif
 ## Módulos
 
 
+## Inyección de dependencias
+
+Los providers pueden ser clases o valores.
+
+**Providers**
+
+- Use Value: es un valor. Se usa por ejemplo para API_KEY
+- 
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
