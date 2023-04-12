@@ -10,6 +10,8 @@ import {
 
 import { UsersService } from '../services/users.service';
 import { ParseIntPipe } from '../../shared/parse-int.pipe';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
+
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -25,12 +27,15 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() payload: any) {
+  create(@Body() payload: CreateUserDto) {
     return this.usersService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateUserDto,
+  ) {
     return this.usersService.update(id, payload);
   }
 
