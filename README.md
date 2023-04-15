@@ -4,6 +4,15 @@
 Este curso incorpora la buenas prácticas como es separar la programacion en diferentes módulos, para que cuando escale la aplicación sea más comprensible y mantenible.
 
 
+## BUG en Visual Studio
+
+En algún momento del desarrollo, el comando nest dejó de funcionar en la terminal.
+Si bien es posible correr el programa con nest start y consultar cosas como `nest --help`o `nest --version`no pude generar los otros componentes.
+
+Una forma de resolverlo fue cambiar el comande 'nest' por '@nestjs/cli', ejemplo:
+- `@nestjs/cli g mo nombre-modulo`
+
+
 
 ## Módulos
 
