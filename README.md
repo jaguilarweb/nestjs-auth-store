@@ -14,9 +14,40 @@ Los providers pueden ser clases o valores.
 
 **Providers**
 
+El que usamos mas a menudo es el UseClass, se usa por defecto.
+
+Ejemplo en el módulo users:
+```
+  providers: [UsersService],
+
+```
+
+Equivale a :
+
+```
+  providers: [
+    {
+      provide: UsersService,
+      useClass: UsersService,
+    },
+  ],
+
+```
+
+Pero hay otros,ejemplo:
+
 - Use Value: es un valor. Se usa por ejemplo para testing y conexiones.
 - Use Factory: es una función que devuelve un valor. Se usa por ejemplo para crear una conexión a la base de datos.
-- 
+
+NestJS permite inyecciones de servicios o datos que necesiten de alguna petición HTTP o algún proceso asíncrono.
+
+**Inyecciones Asíncronas**
+El tipo de inyección useFactory permite que realices un proceso asíncrono para inyectar un servicio o datos provenientes de una API.
+
+Es decir puedes conectar tu Api a otra (una externa).
+
+A partir de NestJS v8, el servicio HttpService importado desde @nestjs/common fue deprecado. Instala la dependencia @nestjs/axios e impórtalo desde ahí. No deberás realizar ningún otro cambio en tu código. También debes asegurarte de importar el módulo HttpModule desde la misma dependencia.
+
 
 
 <p align="center">
