@@ -48,6 +48,18 @@ Es decir puedes conectar tu Api a otra (una externa).
 
 A partir de NestJS v8, el servicio HttpService importado desde @nestjs/common fue deprecado. Instala la dependencia @nestjs/axios e impórtalo desde ahí. No deberás realizar ningún otro cambio en tu código. También debes asegurarte de importar el módulo HttpModule desde la misma dependencia.
 
+`npm i @nestjs/axios`
+`npm i axios`
+
+
+## Global Module
+
+Al desarrollar una aplicación con NestJS, existen necesidades de importar módulos cruzados o de importar un mismo servicio en varios módulos. Lo anterior, hace que la cantidad de imports en cada módulo crezca y se vuelva complicado de escalar.
+
+Los módulos globales son módulos que se importan automáticamente en todos los módulos de la aplicación, sin necesidad de importarlos explícitamente. Esto es útil para importar módulos que se utilizarán en la mayoría de los módulos de la aplicación, como el módulo HttpModule.
+
+Es importante no abusar de esta característica y no tener más de un módulo global para controlar las importaciones. Pueden ocurrir errores de dependencias circulares que suceden cuando el Módulo A importa al Módulo B y este a su vez importa al Módulo A. El decorador @Global() te ayudará a resolver estos problemas.
+
 
 
 <p align="center">
