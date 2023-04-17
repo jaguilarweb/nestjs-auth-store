@@ -69,6 +69,16 @@ Los módulos globales son módulos que se importan automáticamente en todos los
 
 Es importante no abusar de esta característica y no tener más de un módulo global para controlar las importaciones. Pueden ocurrir errores de dependencias circulares que suceden cuando el Módulo A importa al Módulo B y este a su vez importa al Módulo A. El decorador @Global() te ayudará a resolver estos problemas.
 
+## Modulo de configuración
+
+El manejo de variables de entorno en NestJS se realiza de una forma muy sencilla. Instala la dependencia @nestjs/config e importa el módulo ConfigModule en el módulo principal de tu aplicación.
+
+Esta dependencia tiene por detrás el paquete dot.env para manejar variables de entorno con node.
+
+Es muy importante que el archivo de variables de entorno esté en el directorio raíz, es decir fuera de 'src', y al mismo nivel de package json.
+
+
+
 
 
 <p align="center">
