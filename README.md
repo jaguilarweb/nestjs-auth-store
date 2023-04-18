@@ -114,6 +114,21 @@ Es momento de utilizar este objeto que genera una interfaz entre nuestra aplicac
 Observa la configuración necesaria para inyectar y tipar tus variables de entorno. Ahora ya no tendrás que preocuparte por posibles errores al invocar a una de estas variables y evitar dolores de cabeza debugueando estos errores.
 
 
+## Validación de esquemas en .envs con Joi
+
+Joi es una biblioteca de validación de esquemas para JavaScript. Permite definir un esquema que describe la forma de un objeto JavaScript. Luego, puede usar este esquema para validar objetos JavaScript para asegurarse de que tengan la forma esperada.
+
+Las variables de entorno son sensibles, pueden ser requeridas o no, pueden ser un string o un number.
+
+Para validar las variables de entorno, debemos instalar la dependencia joi con el siguiente comando `npm install joi --save`. La misma nos dará las herramientas para realizar validaciones de nuestras variables de entorno.
+
+Importa Joi en el módulo de tu aplicación y a través de la propiedad validationSchema del objeto que recibe el ConfigModule crea el tipado y las validaciones de tus variables de entorno.
+
+Lo que hace Joi es asegurar que, en el archivo .env, existan las variables de entorno indicadas dependiendo si son obligatorias o no, además de validar el tipo para no ingresar un string donde debería ir un number.
+
+En equipos de trabajo profesional, quienes suelen desplegar las aplicaciones en los entornos es el equipo DevOpsy ellos no necesariamente saben qué variables de entorno necesita tu aplicación y de qué tipo son. Gracias a esta configuración, tu app emitirá mensajes de error claros por consola cuando alguna variable no sea correcta.
+
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
