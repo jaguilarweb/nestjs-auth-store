@@ -156,6 +156,18 @@ De esta manera, observarás en la documentación que indica el tipo de dato que 
 Para que Swagger encuentre tus DTOs y Entities es necesario tener los archivos con extension .dto.ts y .entity.ts repectivamente.
 
 
+## Extender la documentación (Personalizarla)
+
+La documentación automática que genera NestJS y Swagger es muy fácil de implementar y otorga una buena base. La documentación de tu aplicación puede ser aún más completa y detallada.
+
+Varios decoradores te servirán para ampliar la documentación de tu API.
+
+### Descripción de las propiedades
+En tus DTO, puedes dar detalle sobre qué se espera recibir en cada propiedad de tus endpoints gracias al decorador @ApiProperty()
+
+
+### Descripción de los controladores
+Puedes agrupar los endpoints en la documentación por controlador con el decorador @ApiTags() y describir, endpoint por endpoint, la funcionalidad de cada uno con el decorador @ApiOperation().
 
 
 <p align="center">
