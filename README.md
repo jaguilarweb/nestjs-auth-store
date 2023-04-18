@@ -128,78 +128,36 @@ Lo que hace Joi es asegurar que, en el archivo .env, existan las variables de en
 
 En equipos de trabajo profesional, quienes suelen desplegar las aplicaciones en los entornos es el equipo DevOpsy ellos no necesariamente saben qué variables de entorno necesita tu aplicación y de qué tipo son. Gracias a esta configuración, tu app emitirá mensajes de error claros por consola cuando alguna variable no sea correcta.
 
+## Integrando Swagger y PartialType con Open API
+
+**Swagger** es un reconocido set de herramientas para la documentación de API Rest. Instala las dependencias necesarias con el comando `npm install --save @nestjs/swagger swagger-ui-express` y configura el archivo main.ts.
+
+Setea el título, descripción y versión de tu documentación. Lo más importante es la URL para acceder a la misma.
+
+Levanta el servidor con `npm run start:dev` y accede a localhost:3000/docs para visualizar la documentación autogenerada que mapea automáticamente todos los endpoints de tu aplicación.
+
+### Tipado de la documentación
+
+Consideraciones previas es familiarizarse con las especificaciones OpenAPI, que es una especificación para escribir una buena documentación para API's REST. (Link)[https://spec.openapis.org/oas/v3.1.0]
+También se encuentra referencia en la documentación oficial de NestJS (Link)[https://docs.nestjs.com/openapi/introduction]
+
+La documentación autogenerada por Swagger es bastante simple, puedes volverla más completa tipando los datos de entrada y salida de cada endpoint gracias a los DTO.
+
+Busca el archivo nest-cli.json en la raíz de tu proyecto y agrega el siguiente plugin:
+  
+  `"plugins": ["@nestjs/swagger/plugin"]`
+
+A continuación, prepara tus DTO.
+Lo más relevante aquí es importar PartialType y OmitType desde @nestjs/swagger en lugar de importarlo desde @nestjs/mapped-types. Coloca también el decorador @ApiProperty() en cada una de las propiedades que el DTO necesita.
+
+De esta manera, observarás en la documentación que indica el tipo de dato que requiere cada uno de tus endpoints.
+
+**NOTA**
+Para que Swagger encuentre tus DTOs y Entities es necesario tener los archivos con extension .dto.ts y .entity.ts repectivamente.
+
+
 
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
