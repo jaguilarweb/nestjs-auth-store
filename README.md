@@ -91,6 +91,30 @@ Rin with NODE_ENV // 👈
 NODE_ENV=prod npm run start:dev
 NODE_ENV=stag npm run start:dev
 
+
+## Tipado en Config
+
+A medida que tu aplicación acumule más y más variables de entorno, puede volverse inmanejable y es propenso a tener errores el no recordar sus nombres o escribirlos mal.
+
+Seguriza tu lista de variables de entorno de manera que evites errores que son difíciles de visualizar.
+
+**Tipado de las variables**
+
+1. Archivo de tipado de variables
+Crea un archivo al que denominaremos config.ts que contendrá el tipado de tu aplicación con ayuda de la dependencia @nestjs/config.
+
+Importa registerAs desde @nestjs/config que servirá para crear el tipado de datos. Crea un objeto con la estructura de datos que necesita tu aplicación. Este objeto contiene los valores de las variables de entorno tomados con el objeto global de NodeJS, process.
+
+2. Importación del tipado de datos
+Importa el nuevo archivo de configuración en el módulo de tu proyecto para que este sea reconocido.
+
+3. Tipado de variables de entorno
+Es momento de utilizar este objeto que genera una interfaz entre nuestra aplicación y las variables de entorno para no confundir el nombre de cada variable.
+
+Observa la configuración necesaria para inyectar y tipar tus variables de entorno. Ahora ya no tendrás que preocuparte por posibles errores al invocar a una de estas variables y evitar dolores de cabeza debugueando estos errores.
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
