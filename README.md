@@ -78,8 +78,18 @@ Esta dependencia tiene por detrás el paquete dot.env para manejar variables de 
 Es muy importante que el archivo de variables de entorno esté en el directorio raíz, es decir fuera de 'src', y al mismo nivel de package json.
 
 
+## Configuración por ambientes
+
+Una aplicación profesional suele tener más de un ambiente. Ambiente local, ambiente de desarrollo, ambiente de pruebas, producción, entre otros, dependiendo la necesidad del equipo y de la organización. Veamos cómo puedes administrar N cantidad de ambientes en NestJS.
+
+Configuramos la aplicación para intercambiar fácilmente entre diversos ambientes (dinámicamente), cada uno con su propia configuración.
+
+NODE_ENV es una variable de entorno propia de NodeJS y del framework Express que se encuentra preseteada en tu aplicación.
 
 
+Rin with NODE_ENV // 👈
+NODE_ENV=prod npm run start:dev
+NODE_ENV=stag npm run start:dev
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>

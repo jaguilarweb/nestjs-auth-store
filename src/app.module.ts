@@ -8,10 +8,12 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 
+import { environments } from './environments';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.development',
+      envFilePath: environments[process.env.NODE_ENV] || '.env.development',
       isGlobal: true,
     }),
     HttpModule,
