@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 
 export class CreateProductDtos {
   @IsString()
