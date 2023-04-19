@@ -92,6 +92,15 @@ Lo primero que debemos realizar es la instalación de las dependencias, tanto de
 
 Listas las intalaciones haremos las conexiones en el archivo app.module.
 
+Para probar ingresamos datos manualmente a la base de datos.
+Luego al ejecutar la aplicacion podemos ver en la terminal esta información:
 
+```
+null
+[
+  { id: 1, title: 'Task 2', completed: false },
+  { id: 2, title: 'Task 1', completed: false }
+]
+```
 
-
+Con ello podemos comprobar que tenemos conexión real a la base de datos.
