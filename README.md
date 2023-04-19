@@ -55,3 +55,29 @@ my_db=# `\q`
 Salir del contenedor
 `exit`
 
+Para interactuar con la base de datos también podemos utilizar un administrador web, por el cual podemos interactura con la base de datos mediante el browser.
+
+Una vez que configuramos el servicio en nuestro archivo docker-compose.yml, podemos ir al browser y abrir el servicio utilizando el puerto fijado. En este caso **http://localhost:5050/** y la aplicación ya está desplegada.
+
+Luego ingresamos con los datos de accesos definidos en nuestras variables en docker-compose.
+
+Ahora necesitamos crear una conexión directa a la ip donde está corriendo postgres.
+
+Manteniendo seleccionado 'Servers' que está desplegado en el menú izquierdo, vamos al menú de opciones superior.
+
+Luego en Objeto -> Crear (o Registrar) -> Servidor
+
+Se abre una ventana que pedirá el nombre de la base de datos, y en ella debemos abrir la pestaña de conexión para configurar la conexión.
+
+Como nos pide la ip, debemos averiguar cual es la ip que docker le dio al contenedor con la base de datos.
+
+Para lo anterior, ejecutamos en nuestra terminal el comando `docker ps` que nos presentará información de los contenedores incorporando el CONTAINER ID. Ese dato lo requerimos para posteriormente identificar la ip.
+
+Para obtener la ip corremos el comando `docker inspect ID-Contenedor` entonces nos arrojará la información de detalle del contenedor cuya ID obtuvimos. La ip es la que aparece como "IPAddress": "172.19.0.2", y es ella la que incorporamos en el formulario del administrador de base de datos web.
+
+Luego llenamos el fomulario y la parte que decía Maintenance database la dejamos como 'postgres'.
+
+Diferenciar comando:
+
+`docker ps` nos presenta todos los contenedores que están corriendo en la maquina, y `docker-compose ps` nos indica los contenedores que correspondan al proyecto.
+
