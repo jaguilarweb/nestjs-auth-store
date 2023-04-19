@@ -81,3 +81,17 @@ Diferenciar comando:
 
 `docker ps` nos presenta todos los contenedores que están corriendo en la maquina, y `docker-compose ps` nos indica los contenedores que correspondan al proyecto.
 
+## node-postgres
+
+Utilizaremos el driver oficial de node para postgres, cuya documentación encontraremos en [node-postgres](https://node-postgres.com/).
+
+Lo primero que debemos realizar es la instalación de las dependencias, tanto de pg como del tipado ya que estamos trabajando con Typescript.
+
+- `npm install pg`
+- `npm install @types/pg -D`
+
+Listas las intalaciones haremos las conexiones en el archivo app.module.
+
+
+
+
