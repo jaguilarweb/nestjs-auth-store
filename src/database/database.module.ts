@@ -1,11 +1,13 @@
 import { Module, Global } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { Client } from 'pg';
+import config from 'src/config';
 
 //Trasladamos estos datos desde app.module para que esten disponibles globalmente.
 const API_KEY = '12443422';
 const API_KEY_PROD = 'PROD3254642';
 
-const client = new Client({
+/* const client = new Client({
   user: 'root',
   host: 'localhost',
   database: 'my_db',
@@ -13,7 +15,7 @@ const client = new Client({
   port: 5432,
 });
 
-client.connect();
+client.connect(); */
 
 /* client.query('SELECT * FROM tasks', (err, res) => {
   console.error(err);
@@ -29,7 +31,19 @@ client.connect();
     },
     {
       provide: 'PG',
-      useValue: client,
+      useFactory: (configService: ConfigType<typeof config>) => {
+        const { user, host, dbName, password, port } = configService.postgres;
+        const client = new Client({
+          user,
+          host,
+          database: dbName,
+          password,
+          port,
+        });
+        client.connect();
+        return client;
+      },
+      inject: [config.KEY],
     },
   ],
   exports: ['API_KEY', 'PG'],
