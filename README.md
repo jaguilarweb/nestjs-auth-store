@@ -104,3 +104,23 @@ null
 ```
 
 Con ello podemos comprobar que tenemos conexión real a la base de datos.
+
+
+## ORM (Object Relational Mapping)
+
+Es una técnica de programación que permite mapear objetos de una aplicación a tablas de una base de datos relacional.
+Es decir, nos ayuda a manipular y consultar la información almacenada  dentro de una base de datos usando programación orientada a objetos.
+
+Un ORM se encarga de la conexión y de manejar todo con base en modelos y entidades. Con ello, no es requerido ejecutar código SQL directamente en nuestro código ya que el ORM nos otorga métodos.
+
+En este caso utilizaremos TypeORM, el cual nos permite trabajar con bases de datos relacionales y no relacionales.
+
+TyperORM está desarrollado con Typescript https://typeorm.io
+
+Para instalar TypeORM ejecutamos el comando `npm install --save @nestjs/typeorm typeorm`.
+
+Luego realizamos la configuración, que en nuestro caso la hacemos en el módulo de base de datos (database.module.ts) que habíamos creado previamente.
+
+Importamos el TypeORM Module, y como es un módulo lo incorporamos en los imports.
+Y como queremos que la configuración sea usable por todos los servicios y módulos de nuestra aplicación, lo incorporamos en los exports.
+
