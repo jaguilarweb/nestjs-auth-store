@@ -16,8 +16,8 @@ export class ProductsService {
     return this.productRepo.find();
   }
 
-  findOne(id: number) {
-    const product = this.productRepo.findOneBy({ id });
+  async findOne(id: number) {
+    const product = await this.productRepo.findOneBy({ id });
     //Error first
     if (!product) {
       /* throw 'error'; */
@@ -26,36 +26,33 @@ export class ProductsService {
     return product;
   }
 
-  /*   create(payload: CreateProductDtos): ProductEntity {
-    console.log(payload);
-    this.counterId = this.counterId + 1;
-    const newProduct = {
-      id: this.counterId,
-      ...payload,
-    };
-    this.products.push(newProduct);
-    return newProduct;
+  create(payload: CreateProductDtos) {
+    //El método 'create' en esta caso solo crea una instancia
+    const newProduct = this.productRepo.create(payload);
+    //El método 'save' guarda en la base de datos
+    return this.productRepo.save(newProduct);
   }
 
-  update(id: number, payload: UpdateProductDtos): ProductEntity {
-    const product = this.findOne(id);
-    if (!product) {
-      throw new NotFoundException(`Product #${id} not found`);
-    }
-    const index = this.products.findIndex((item) => item.id === id);
-    this.products[index] = {
-      ...product,
-      ...payload,
-    };
-    return this.products[index];
-  }
-
-  delete(id: number): boolean {
-    const index = this.products.findIndex((item) => item.id === id);
-    if (index <= -1) {
-      throw new NotFoundException(`Product #${id} not found`);
-    }
-    this.products.splice(index, 1);
-    return true;
+  //Esta es una forma valida pero poco efectiva
+  /*   create(payload: CreateProductDtos) {
+    const newProduct = new ProductEntity();
+    newProduct.name = payload.name;
+    newProduct.price = payload.price;
+    newProduct.description = payload.description;
+    newProduct.image = payload.image;
+    newProduct.stock = payload.stock;
+    return this.productRepo.save(newProduct);
   } */
+
+  async update(id: number, payload: UpdateProductDtos) {
+    const product = await this.productRepo.findOneBy({ id });
+    //Merge sobreescribe los datos sobre el producto
+    this.productRepo.merge(product, payload);
+    return this.productRepo.save(product);
+  }
+
+  delete(id: number) {
+    //POdemos agregar una validación
+    return this.productRepo.delete(id);
+  }
 }
