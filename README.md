@@ -124,3 +124,8 @@ Luego realizamos la configuración, que en nuestro caso la hacemos en el módulo
 Importamos el TypeORM Module, y como es un módulo lo incorporamos en los imports.
 Y como queremos que la configuración sea usable por todos los servicios y módulos de nuestra aplicación, lo incorporamos en los exports.
 
+## Entidades (modelos)
+
+Las entidades son clases que representan tablas de la base de datos. Estas clases deben extender de la clase Entity de TypeORM.
+
+Para crear una entidad ejecutamos el comando `nest g class tasks/task.entity`.
