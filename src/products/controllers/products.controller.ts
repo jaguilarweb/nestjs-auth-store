@@ -57,21 +57,21 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
-  @Post()
+  /*   @Post()
   create(@Body() payload: CreateProductDtos) {
     return this.productsService.create(payload);
-  }
+  } */
 
-  @Put(':id')
+  /*   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateProductDtos,
   ) {
     return this.productsService.update(id, payload);
-  }
+  } */
 
-  @Delete(':id')
+  /*   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.delete(id);
-  }
+  } */
 }

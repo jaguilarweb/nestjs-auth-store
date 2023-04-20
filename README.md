@@ -129,3 +129,11 @@ Y como queremos que la configuración sea usable por todos los servicios y módu
 Las entidades son clases que representan tablas de la base de datos. Estas clases deben extender de la clase Entity de TypeORM.
 
 Para crear una entidad ejecutamos el comando `nest g class tasks/task.entity`.
+
+
+## Patrones para manejar los datos con base a las entidades o modelos
+
+### Active Record
+
+
+### Repositories

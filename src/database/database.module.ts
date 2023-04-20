@@ -38,6 +38,8 @@ client.connect(); */
           username: user,
           password,
           database: dbName,
+          synchronize: true, //Sincroniza las entidades para que cree las tablas en la base de datos.
+          autoLoadEntities: true, //Carga automaticamente las entidades
         };
       },
     }),

@@ -1,27 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { ProductEntity } from '../entities/product.entity';
 import { CreateProductDtos, UpdateProductDtos } from '../dtos/product.dtos';
 
 @Injectable()
 export class ProductsService {
-  private counterId = 1;
-  private products: ProductEntity[] = [
-    {
-      id: 1,
-      name: 'Product 1',
-      description: 'Description 1',
-      price: 100,
-      stock: 10,
-      image: '',
-    },
-  ];
+  constructor(
+    @InjectRepository(ProductEntity)
+    private productRepo: Repository<ProductEntity>,
+  ) {}
 
-  findAll(): ProductEntity[] {
-    return this.products;
+  findAll() {
+    return this.productRepo.find();
   }
 
-  findOne(id: number): ProductEntity {
-    const product = this.products.find((item) => item.id === id);
+  findOne(id: number) {
+    const product = this.productRepo.findOneBy({ id });
     //Error first
     if (!product) {
       /* throw 'error'; */
@@ -30,7 +26,7 @@ export class ProductsService {
     return product;
   }
 
-  create(payload: CreateProductDtos): ProductEntity {
+  /*   create(payload: CreateProductDtos): ProductEntity {
     console.log(payload);
     this.counterId = this.counterId + 1;
     const newProduct = {
@@ -61,5 +57,5 @@ export class ProductsService {
     }
     this.products.splice(index, 1);
     return true;
-  }
+  } */
 }
