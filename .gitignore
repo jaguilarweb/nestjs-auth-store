@@ -39,3 +39,4 @@ lerna-debug.log*
 *.env
 *.env.development
 /postgres_data
+/mysql_data

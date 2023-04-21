@@ -6,7 +6,7 @@ services:
     environment:
      - POSTGRES_DB=my_db
      - POSTGRES_USER=root
-     - POSTGRES_PASSWORD=123456
+     - POSRTGRES_PASSWORD=123456
     ports:
       - '5432:5432'
     volumes:
@@ -19,3 +19,26 @@ services:
      - PGADMIN_DEFAULT_PASSWORD=root
     ports:
      - "5050:80"
+    depends_on:
+      - postgres_db
+
+  mysql:
+    image: mysql:5
+    environment:
+     - MYSQL_DATABASE=my_db
+     - MYSQL_USER=root
+     - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+     - PMA_HOST=mysql
+     - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - '8080:80'
+    depends_on:
+      - mysql

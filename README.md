@@ -18,7 +18,7 @@ Este curso incorpora la persistencia de datos al store que hemos ido creando en 
 - Postman
 
 
-## Docker
+## Postgres con Docker
 
 Es un contenedor con el cual correremos las bases de datos, sin necesidad de instalarlas en nuestra sistema local y así evitar lidiar problemas de configuración o drivers.
 
@@ -81,6 +81,8 @@ Diferenciar comando:
 
 `docker ps` nos presenta todos los contenedores que están corriendo en la maquina, y `docker-compose ps` nos indica los contenedores que correspondan al proyecto.
 
+`docker stop id_contenedor` detiene un contenedor en nuestra máquina.
+
 ## node-postgres
 
 Utilizaremos el driver oficial de node para postgres, cuya documentación encontraremos en [node-postgres](https://node-postgres.com/).
@@ -137,3 +139,19 @@ Para crear una entidad ejecutamos el comando `nest g class tasks/task.entity`.
 
 
 ### Repositories
+
+
+## Mysql con Docker
+
+Para configurar mysql como base de datos, podemos incluirla como servicio en el archivo docker-compose.yml.
+
+También podemos incluir un manejador web, que en este caso será phpmyadmin dado que es uno de los más usados para mysql como mariadb.
+
+Debemos considerar que por convención, cuando configuramos los puertos en el archivo docker-compose.yml  se verá así:
+  
+  ```
+      ports:
+        - '8080:80'
+  ```
+
+Donde tendremos Puerto_HOST : Puerto_CONTAINER.
