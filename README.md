@@ -124,6 +124,30 @@ Para instalar TypeORM ejecutamos el comando `npm install --save @nestjs/typeorm 
 Luego realizamos la configuración, que en nuestro caso la hacemos en el módulo de base de datos (database.module.ts) que habíamos creado previamente.
 
 Importamos el TypeORM Module, y como es un módulo lo incorporamos en los imports.
+
+La configuración para postgres queda de la siguiente forma:
+```
+  imports: [
+    TypeOrmModule.forRootAsync({
+      inject: [config.KEY],
+      useFactory: (configService: ConfigType<typeof config>) => {
+        const { user, host, dbName, password, port } = configService.postgres;
+        return {
+          type: 'postgress',
+          host,
+          port,
+          username: user,
+          password,
+          database: dbName,
+          synchronize: true, //Sincroniza las entidades para que cree las tablas en la base de datos.
+          autoLoadEntities: true, //Carga automaticamente las entidades
+        };
+      },
+    }),
+  ],
+
+```
+
 Y como queremos que la configuración sea usable por todos los servicios y módulos de nuestra aplicación, lo incorporamos en los exports.
 
 ## Entidades (modelos)
@@ -146,6 +170,7 @@ Para crear una entidad ejecutamos el comando `nest g class tasks/task.entity`.
 Para configurar mysql como base de datos, podemos incluirla como servicio en el archivo docker-compose.yml.
 
 También podemos incluir un manejador web, que en este caso será phpmyadmin dado que es uno de los más usados para mysql como mariadb.
+La imagen de phpmyadmin y la documentación pueden consultarse en este [link](https://hub.docker.com/_/phpmyadmin?tab=description)
 
 Debemos considerar que por convención, cuando configuramos los puertos en el archivo docker-compose.yml  se verá así:
   
@@ -155,3 +180,26 @@ Debemos considerar que por convención, cuando configuramos los puertos en el ar
   ```
 
 Donde tendremos Puerto_HOST : Puerto_CONTAINER.
+
+Tambien debemos instalar el cliente de mysql para node, mysql2. Revisar documentación en [link](https://github.com/sidorares/node-mysql2)
+
+`npm install --save mysql2`
+
+Agregar configuración al archivo config.ts y modificar la configuración den database.module
+
+Configuración para mysql es igual que para postgres y solo cambia lo siguiente:
+
+```
+  imports: [
+    TypeOrmModule.forRootAsync({
+      inject: [config.KEY],
+      useFactory: (configService: ConfigType<typeof config>) => {
+        const { user, host, dbName, password, port } = configService.mysql;
+        return {
+          type: 'mysql',
+        };
+      },
+    }),
+  ],
+
+```
