@@ -252,6 +252,12 @@ export const AppDataSource = new DataSource({
 
 ```
 
+Para realizar la configuración anterior, pero leyendo las variables de entorno, instalamos la dependencia de dotenv.
+
+`npm i dotenv`
+
+
+
 
 Posteriormente en la consola debemos ejecutar el siguiente comando:
 

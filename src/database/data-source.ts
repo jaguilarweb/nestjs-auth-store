@@ -1,11 +1,15 @@
+import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 
 //Esta es la conexión para el cliente de comandos y para correr migraciones.
 //Es diferente a la conexión a la base de datos que está configurada en database.module.
 
+//El path por defecto es buscar el arcchivo .env en la raiz.
+dotenv.config();
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: 'postgres://root:123456@localhost:5432/my_db',
+  url: process.env.DATABASE_URL,
   logging: false,
   synchronize: false,
   entities: ['src/**/*.entity.ts'],
