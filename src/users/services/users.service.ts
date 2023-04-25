@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
 
 import { UserEntity } from '../entities/user.entity';
-import { OrderEntity } from '../entities/order.entity';
+/* import { OrderEntity } from '../entities/order.entity'; */
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { ProductsService } from '../../products/services/products.service';
 
@@ -69,7 +69,7 @@ export class UsersService {
     return true;
   }
 
-  async getOrdersByUser(id: number) {
+  /*   async getOrdersByUser(id: number) {
     const user = this.findOne(id);
     return {
       date: new Date(),
@@ -87,5 +87,5 @@ export class UsersService {
         resolve(res.rows);
       });
     });
-  }
+  } */
 }

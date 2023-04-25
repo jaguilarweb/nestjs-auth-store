@@ -203,3 +203,78 @@ Configuración para mysql es igual que para postgres y solo cambia lo siguiente:
   ],
 
 ```
+
+## Migraciones
+
+Las migraciones son una forma de versionar la base de datos, es decir, nos permiten llevar un control de las modificaciones que se realizan en la base de datos.
+
+Esto lo estamos realizando, hasta ahora, con la característica de sincronize que tiene typeORM ( synchronize: true) que agregamos en el database.module.
+
+Está técnica es recomendada solo para ambientes de desarrollo y testing.
+
+En producción es una mala práctica y además es riesgosa, ya que cualquier cambio que se realice se traspasa a la base de datos, generando riesgo de corromperla.
+
+Para realizar las migraciones, debemos instalar la dependencia de typeORM CLI.
+
+Para el 2023 las indicaciones son diferentes al curso, pero los modulos de más adelante ven el update. En todo caso la documentación oficial en este punto es la siguiente:
+
+[Documentación oficial](https://typeorm.io/#/migrations)
+
+Lo primero es instalar la [cli](https://typeorm.io/using-cli#installing-cli),y para ello se debe tener instalado ts-node.
+
+Agregar en el package.json el siguiente script:
+```
+"scripts": {
+    ...
+    "typeorm": "typeorm-ts-node-esm -d src/database/data-source.ts",
+    "migrations:generate": "npm run typeorm  -- migration:generate",
+}
+```
+o la alternativa **"typeorm": "typeorm-ts-node-commonjs"**. Pero como nestjs maneja módulos, se recomienda la primera.
+
+
+La bandera -d corresponde a 'datasource', que es de donde debe leer la conexión y luego ponemos la dirección del archivo datasource.
+
+El archivo data-source.ts debe contener la siguiente información:
+
+```
+import { DataSource } from 'typeorm';
+
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  url: 'postgres://root:123456@localhost:5432/my_db',
+  logging: false,
+  synchronize: false,
+  entities: ['src/**/*.entity.ts'],
+  migrations: ['src/database/migrations/*.ts'],
+  migrationsTableName: 'migrations',
+});
+
+```
+
+
+Posteriormente en la consola debemos ejecutar el siguiente comando:
+
+`npm run migrations:generate ./src/database/migrations/init`
+
+Nota: Si ya habíamos creado las tablas en la base de datos, debemos borrarlas antes de generar la migración, de lo contrario presentará un alerta.
+
+Con lo anterior, se genera una migación en el directorio que definimos, el cual tiene la siguiente estructura:
+
+
+```
+import {MigrationInterface, QueryRunner} from "typeorm";
+
+
+export class CreateTasksTable1629740000000 implements MigrationInterface {
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+    }
+
+}
+```
+
+Como solo se ha generado una migración, aún no se refleja en la base de datos.

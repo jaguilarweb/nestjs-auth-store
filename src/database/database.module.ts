@@ -24,6 +24,7 @@ client.connect(); */
   console.log(res.rows);
 }); */
 
+// Conexión a la base de datos que tiene la aplicación corriendo en vivo
 @Global()
 @Module({
   imports: [

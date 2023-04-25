@@ -1,10 +1,12 @@
-import { Column, Entity } from 'typeorm';
+/* import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 
 import { UserEntity } from './user.entity';
 import { ProductEntity } from '../../products/entities/product.entity';
 
 @Entity()
 export class OrderEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column({ type: 'varchar' })
   date: Date;
   @Column()
@@ -12,3 +14,4 @@ export class OrderEntity {
   @Column()
   products: ProductEntity[];
 }
+ */
