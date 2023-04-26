@@ -284,3 +284,22 @@ export class CreateTasksTable1629740000000 implements MigrationInterface {
 ```
 
 Como solo se ha generado una migración, aún no se refleja en la base de datos.
+
+Comandos para correr las migraciones:
+```
+    "migrations:run": "npm run typeorm  -- migration:run",
+    "migrations:drop": "npm run typeorm  -- schema:drop",
+    "migrations:show": "npm run typeorm  -- migration:show",
+    "migrations:revert": "npm run typeorm -- migration:revert"
+```
+
+Hay que tener mucho cuidado con el script (drop) ya que lo que hace es borrar todo dentro de la base de datos, ya que lo hace sobre el schema no sobre la migración.
+
+El comando revert, vuelve hacia atrás los cambios.
+
+
+Una vez que ya estamos funcionando mediante migraciones, debemos cambiar la configuración de la conexión a la base de datos de database.module. En ella debemos cambiar la opción de sincrinizar para ponerla en false.
+
+```
+synchronize: false,
+```
