@@ -21,20 +21,20 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('tasks')
+  /*   @Get('tasks')
   getTasks() {
     return this.usersService.getTasks();
-  }
+  } */
 
   @Get(':id')
   getOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
-  @Get(':id/orders')
+  /*   @Get(':id/orders')
   getOrders(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.getOrdersByUser(id);
-  }
+  } */
 
   @Post()
   create(@Body() payload: CreateUserDto) {

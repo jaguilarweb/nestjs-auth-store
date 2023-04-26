@@ -133,7 +133,7 @@ La configuración para postgres queda de la siguiente forma:
       useFactory: (configService: ConfigType<typeof config>) => {
         const { user, host, dbName, password, port } = configService.postgres;
         return {
-          type: 'postgress',
+          type: 'postgres',
           host,
           port,
           username: user,
@@ -303,3 +303,6 @@ Una vez que ya estamos funcionando mediante migraciones, debemos cambiar la conf
 ```
 synchronize: false,
 ```
+
+## Manejar las entidades con migraciones
+

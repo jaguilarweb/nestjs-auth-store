@@ -17,7 +17,9 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
-    const product = await this.productRepo.findOneBy({ id });
+    const product = await this.productRepo.findOne({
+      where: { id },
+    });
     //Error first
     if (!product) {
       /* throw 'error'; */
@@ -26,7 +28,7 @@ export class ProductsService {
     return product;
   }
 
-  create(payload: CreateProductDtos) {
+  async create(payload: CreateProductDtos) {
     //El método 'create' en esta caso solo crea una instancia
     const newProduct = this.productRepo.create(payload);
     //El método 'save' guarda en la base de datos
