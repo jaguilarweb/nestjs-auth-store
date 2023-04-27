@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ProductEntity } from '../entities/product.entity';
+import { BrandsService } from './brands.service';
 import { CreateProductDtos, UpdateProductDtos } from '../dtos/product.dtos';
 
 @Injectable()
@@ -10,10 +11,13 @@ export class ProductsService {
   constructor(
     @InjectRepository(ProductEntity)
     private productRepo: Repository<ProductEntity>,
+    private brandService: BrandsService,
   ) {}
 
   findAll() {
-    return this.productRepo.find();
+    return this.productRepo.find({
+      relations: ['brand'],
+    });
   }
 
   async findOne(id: number) {
@@ -31,6 +35,13 @@ export class ProductsService {
   async create(payload: CreateProductDtos) {
     //El método 'create' en esta caso solo crea una instancia
     const newProduct = this.productRepo.create(payload);
+    if (!newProduct) {
+      throw new NotFoundException('Product not created');
+    }
+    if (payload.brandId) {
+      const brand = await this.brandService.findOne(payload.brandId);
+      newProduct.brand = brand;
+    }
     //El método 'save' guarda en la base de datos
     return this.productRepo.save(newProduct);
   }
@@ -48,6 +59,13 @@ export class ProductsService {
 
   async update(id: number, payload: UpdateProductDtos) {
     const product = await this.productRepo.findOneBy({ id });
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+    if (payload.brandId) {
+      const brand = await this.brandService.findOne(payload.brandId);
+      product.brand = brand;
+    }
     //Merge sobreescribe los datos sobre el producto
     this.productRepo.merge(product, payload);
     return this.productRepo.save(product);

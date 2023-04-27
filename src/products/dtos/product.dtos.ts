@@ -33,6 +33,12 @@ export class CreateProductDtos {
   @IsNotEmpty()
   @ApiProperty()
   readonly image: string;
+
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly brandId: number;
 }
 
 // Personalizar respuesta
