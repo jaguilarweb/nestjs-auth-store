@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { BrandEntity } from './brand.entity';
+import { CategoryEntity } from './category.entity';
 //La entidad debil debe tener la referencia
 
 @Entity()
@@ -37,4 +40,8 @@ export class ProductEntity {
 
   @ManyToOne(() => BrandEntity, (brand) => brand.products)
   brand: BrandEntity;
+
+  @ManyToMany(() => CategoryEntity, (category) => category.products)
+  @JoinTable() //Debe ir en un solo lado da igual cual
+  categories: CategoryEntity[];
 }
