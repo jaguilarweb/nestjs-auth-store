@@ -4,7 +4,11 @@ import {
   Entity,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+
+import { BrandEntity } from './brand.entity';
+//La entidad debil debe tener la referencia
 
 @Entity()
 export class ProductEntity {
@@ -30,4 +34,7 @@ export class ProductEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @ManyToOne(() => BrandEntity, (brand) => brand.products)
+  brand: BrandEntity;
 }
