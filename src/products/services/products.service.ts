@@ -102,6 +102,18 @@ export class ProductsService {
     return this.productRepo.save(product);
   }
 
+  async addCategoryByProduct(productId: number, categoryId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: ['categories'],
+    });
+    const category = await this.categoryRepo.findOne({
+      where: { id: categoryId },
+    });
+    product.categories.push(category);
+    return this.productRepo.save(product);
+  }
+
   delete(id: number) {
     //POdemos agregar una validación
     return this.productRepo.delete(id);
