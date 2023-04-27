@@ -79,8 +79,26 @@ export class ProductsService {
       const brand = await this.brandRepo.findOneBy({ id: payload.brandId });
       product.brand = brand;
     }
+    if (payload.categoriesId) {
+      const categories = await this.categoryRepo.findBy({
+        id: In(payload.categoriesId),
+      });
+      product.categories = categories;
+    }
     //Merge sobreescribe los datos sobre el producto
     this.productRepo.merge(product, payload);
+    return this.productRepo.save(product);
+  }
+
+  //Es necesario incorporar la relación para poder ejecutar el filter
+  async removeCategoryByProduct(productId: number, categoryId: number) {
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: ['categories'],
+    });
+    product.categories = product.categories.filter(
+      (item) => item.id !== categoryId,
+    );
     return this.productRepo.save(product);
   }
 
