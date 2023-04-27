@@ -4,6 +4,7 @@ import {
   IsUrl,
   IsNotEmpty,
   IsPositive,
+  IsArray,
 } from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
@@ -39,6 +40,11 @@ export class CreateProductDtos {
   @IsNotEmpty()
   @ApiProperty()
   readonly brandId: number;
+
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly categoriesId: number[];
 }
 
 // Personalizar respuesta

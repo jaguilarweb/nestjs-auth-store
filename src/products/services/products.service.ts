@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 
 import { ProductEntity } from '../entities/product.entity';
+import { CategoryEntity } from '../entities/category.entity';
+import { BrandEntity } from '../entities/brand.entity';
 import { BrandsService } from './brands.service';
 import { CreateProductDtos, UpdateProductDtos } from '../dtos/product.dtos';
 
@@ -12,6 +14,10 @@ export class ProductsService {
     @InjectRepository(ProductEntity)
     private productRepo: Repository<ProductEntity>,
     private brandService: BrandsService,
+    @InjectRepository(CategoryEntity)
+    private categoryRepo: Repository<CategoryEntity>,
+    @InjectRepository(BrandEntity)
+    private brandRepo: Repository<BrandEntity>,
   ) {}
 
   findAll() {
@@ -23,6 +29,7 @@ export class ProductsService {
   async findOne(id: number) {
     const product = await this.productRepo.findOne({
       where: { id },
+      relations: ['brand', 'categories'],
     });
     //Error first
     if (!product) {
@@ -39,8 +46,14 @@ export class ProductsService {
       throw new NotFoundException('Product not created');
     }
     if (payload.brandId) {
-      const brand = await this.brandService.findOne(payload.brandId);
+      const brand = await this.brandRepo.findOneBy({ id: payload.brandId });
       newProduct.brand = brand;
+    }
+    if (payload.categoriesId) {
+      const categories = await this.categoryRepo.findBy({
+        id: In(payload.categoriesId),
+      });
+      newProduct.categories = categories;
     }
     //El método 'save' guarda en la base de datos
     return this.productRepo.save(newProduct);
@@ -63,7 +76,7 @@ export class ProductsService {
       throw new NotFoundException('Product not found');
     }
     if (payload.brandId) {
-      const brand = await this.brandService.findOne(payload.brandId);
+      const brand = await this.brandRepo.findOneBy({ id: payload.brandId });
       product.brand = brand;
     }
     //Merge sobreescribe los datos sobre el producto
