@@ -13,6 +13,8 @@ import { BrandsService } from 'src/products/services/brands.service';
 import { BrandEntity } from 'src/products/entities/brand.entity';
 import { OrderEntity } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { OrdersService } from './services/orders.service';
+import { OrdersController } from './controllers/orders.controller';
 
 @Module({
   imports: [
@@ -25,7 +27,12 @@ import { OrderItem } from './entities/order-item.entity';
     ]),
     ProductsModule,
   ],
-  controllers: [UsersController, CustomerController, BrandsController],
-  providers: [UsersService, CustomersService, BrandsService],
+  controllers: [
+    UsersController,
+    CustomerController,
+    BrandsController,
+    OrdersController,
+  ],
+  providers: [UsersService, CustomersService, BrandsService, OrdersService],
 })
 export class UsersModule {}
