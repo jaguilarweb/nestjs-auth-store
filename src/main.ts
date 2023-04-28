@@ -11,6 +11,9 @@ async function bootstrap() {
       whitelist: true, //Ignora el atributo adicional
       forbidNonWhitelisted: true, //Alerta que hay un atributo adicional
       /* transform: true, */
+      transformOptions: {
+        enableImplicitConversion: true, //Todos los queries param que tengan numero los transforma
+      },
     }),
   );
   const config = new DocumentBuilder()

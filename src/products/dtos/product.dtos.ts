@@ -5,6 +5,8 @@ import {
   IsNotEmpty,
   IsPositive,
   IsArray,
+  IsOptional,
+  Min,
 } from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
@@ -55,3 +57,13 @@ export class CreateProductDtos {
 } */
 
 export class UpdateProductDtos extends PartialType(CreateProductDtos) {}
+
+export class FilterProductDto {
+  @IsOptional()
+  @IsPositive()
+  limit: number;
+
+  @IsOptional()
+  @Min(0)
+  offset: number;
+}
