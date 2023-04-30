@@ -7,6 +7,7 @@ import {
   IsArray,
   IsOptional,
   Min,
+  ValidateIf,
 } from 'class-validator';
 //La activación de las validaciones se realiza en el archivo main.ts
 
@@ -66,4 +67,12 @@ export class FilterProductDto {
   @IsOptional()
   @Min(0)
   offset: number;
+
+  @IsOptional()
+  @IsPositive()
+  minPrice: number;
+
+  @ValidateIf((item) => item.minPrice) //Esta validación perimite que cuando se de un minPrice es obligatorio el maxPrice
+  @IsPositive()
+  maxPrice: number;
 }
