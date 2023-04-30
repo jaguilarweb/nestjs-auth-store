@@ -364,7 +364,12 @@ Nombres de Columna:
 Es importante crear los nombres de las bases de datos desde el diseño para no correr riesgos de perder información con migraciones posteriores, ya que las migraciones hacen cambios en la estructura de las bases de datos pero no hace migraciones de los datos propiamente tal. Ese tipo de migración se debe realizar directamente con script de sql.
 
 
+## Serializar
 
+Es el proceso de convertir un objeto en un string, para que pueda ser enviado a través de la red.
+Podemos incluir o excluir información.
+
+Para lo anterior trabajamos en el archivo main.ts.
 
 
 
