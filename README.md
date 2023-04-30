@@ -306,3 +306,39 @@ synchronize: false,
 
 ## Manejar las entidades con migraciones
 
+
+
+
+
+
+
+
+## Indexaciones
+
+Proceso que se utiliza en las bases de datos, relacionales y no relacionales, que sirve para hacer más rápidas las búsquedas utilizando algunos parámetros.
+Esto lo logramos ahrehando el decorador @Index() al atributo que queremos indexar, ejemplo:
+
+Product.entity
+
+```
+  @Index()
+  @Column({ type: 'int' })
+  price: number;
+
+```
+
+También es posible indexar más de un parámetro (conjunta), para ello agregamos el decorador @Index a la tabla y agregamos los nombres de los parametros que indexaremos.
+
+Ejemplo:
+
+Product.entity
+
+```
+@Entity()
+@Index(['price', 'stock'])
+export class ProductEntity {}
+
+```
+
+Como el cambio se hace en la entidad, debemos correr la migración para que se ejecute en la base de datos el cambio.
+El cuidado que se debe tener es que se debe escojer parámetros especificos, y no generales, de modo que la base de datos pueda priorizar. Si son muchos parámetros o la base de datos es muy pequeña, no será visible la rápidez.
