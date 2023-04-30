@@ -342,3 +342,30 @@ export class ProductEntity {}
 
 Como el cambio se hace en la entidad, debemos correr la migración para que se ejecute en la base de datos el cambio.
 El cuidado que se debe tener es que se debe escojer parámetros especificos, y no generales, de modo que la base de datos pueda priorizar. Si son muchos parámetros o la base de datos es muy pequeña, no será visible la rápidez.
+
+## Naming
+
+Buenas prácticas.
+
+En el caso de variables podemos usar los estandares como el camelCase, pero esta práctica no es igual para las bases de datos.
+
+Buenas prácticas para las bases de datos.
+
+Generales
+- Los nombres de las tablas deben ir en plural.
+- No se debe utilizar como nombre de la tabla el nombre de la columna.
+- No se debe utilizar como nombre de la base de datos el nombre de la tabla.
+
+Nombres de Columna:
+- No deben tener caracteres especiales (ejemplo mayúscula).
+- No deben tener espacios.
+- Se puede utilizar guión bajo para palabras compuestas.
+
+Es importante crear los nombres de las bases de datos desde el diseño para no correr riesgos de perder información con migraciones posteriores, ya que las migraciones hacen cambios en la estructura de las bases de datos pero no hace migraciones de los datos propiamente tal. Ese tipo de migración se debe realizar directamente con script de sql.
+
+
+
+
+
+
+

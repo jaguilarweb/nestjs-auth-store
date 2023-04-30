@@ -35,6 +35,6 @@ export class UserEntity {
     nullable: true,
   })
   //Este carga con la relación (no se debe duplicar)
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })
   customer: CustomerEntity;
 }
