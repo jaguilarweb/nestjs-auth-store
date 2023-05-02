@@ -25,4 +25,19 @@ Esto a menudo se denomina como autorización. La Autorización (y su prima la Au
 
 Pero los middleware, por naturaleza, son tontos. No saben cuál manejador será ejecutado después de llamar a la función 'next()'. Por otra parte, los Guardianes tienen acceso a la instancia 'ExecutionContext' y, por lo tanto, saben exactamente qué es lo siguiente que será ejecutado. 
 
+NODE_ENV=dev npm run start:dev
+Configuración Server: 172.18.0.2
 
+## Hashing de contraseñas TypeORM
+
+Para el hashing de contraseñas, se utiliza la librería bcrypt, la cual es una librería de encriptación de contraseñas. Para instalarla, se ejecuta el siguiente comando:
+
+```bash
+npm install bcrypt
+```
+
+Como trabajamos con typescript es necesaria la libreria de tipado:
+
+```bash
+npm install @types/bcrypt -D
+```

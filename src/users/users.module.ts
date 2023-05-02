@@ -43,5 +43,6 @@ import { OrderItemService } from './services/order-item.service';
     OrdersService,
     OrderItemService,
   ],
+  exports: [UsersService],
 })
 export class UsersModule {}

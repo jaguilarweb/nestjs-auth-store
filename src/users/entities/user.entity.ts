@@ -8,23 +8,30 @@ import {
   JoinColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
 import { CustomerEntity } from './customer.entity';
 
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column({ type: 'varchar', length: 255 })
   email: string;
+
+  @Exclude()
   @Column({ type: 'varchar', length: 255 })
   password: string; //Encrypt
+
   @Column({ type: 'varchar', length: 100 })
   role: string;
+
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
+
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
