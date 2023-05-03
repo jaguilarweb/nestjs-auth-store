@@ -28,6 +28,9 @@ Pero los middleware, por naturaleza, son tontos. No saben cuál manejador será 
 NODE_ENV=dev npm run start:dev
 Configuración Server: 172.18.0.2
 
+Comando para ver los puertos usados en MAC
+lsof -i -P | grep -i listen
+
 ## Hashing de contraseñas TypeORM
 
 Para el hashing de contraseñas, se utiliza la librería bcrypt, la cual es una librería de encriptación de contraseñas. Para instalarla, se ejecuta el siguiente comando:
@@ -41,3 +44,18 @@ Como trabajamos con typescript es necesaria la libreria de tipado:
 ```bash
 npm install @types/bcrypt -D
 ```
+
+
+## Passport
+
+Passport es un middleware de autenticación para Node.js. Extremadamente flexible y modular, Passport puede ser sin esfuerzo integrado a cualquier aplicación Express, y se puede utilizar junto con cualquier base de datos y/o motor de plantillas.
+
+Para instalarlo, se ejecuta el siguiente comando:
+
+```bash
+npm install @nestjs/passport passport passport-local
+npm install --save-dev @types/passport-local
+```
+
+Debemos implementar una Strategy
+

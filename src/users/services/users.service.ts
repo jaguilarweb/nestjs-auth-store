@@ -38,8 +38,8 @@ export class UsersService {
     return user;
   }
 
-  findByEmail(email: string) {
-    return this.userRepo.findOne({
+  async findByEmail(email: string) {
+    return await this.userRepo.findOne({
       where: { email },
     });
   }
