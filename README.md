@@ -59,3 +59,30 @@ npm install --save-dev @types/passport-local
 
 Debemos implementar una Strategy
 
+
+## JWT
+
+JSON Web Token (JWT) es un estándar abierto basado en JSON propuesto por IETF para la creación de tokens de acceso que permiten la propagación de identidad y privilegios entre dos partes de forma segura, confiable y simple.
+Este token nos permite saber que usuario está logueado y a su vez le permite al usuario logueado hacer request.
+
+A diferencia de las cookies o de las sesiones que corren al lado del navegador, los jwt podemos utilizarlos para aplicaciones móviles.
+
+Para instalarlo, se ejecuta el siguiente comando:
+
+```bash
+npm install --save @nestjs/jwt passport-jwt
+npm install --save-dev @types/passport-jwt
+```
+
+## Configuración de JWT
+
+Para configurar el JWT, se debe crear un archivo llamado jwt.config.ts en la carpeta auth, con el siguiente contenido:
+
+```bash
+import { registerAs } from '@nestjs/config';
+
+export default registerAs('jwt', () => ({
+  secret: process.env.JWT_SECRET,
+  expiresIn: process.env.JWT_EXPIRES_IN,
+}));
+```
