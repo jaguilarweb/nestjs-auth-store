@@ -15,6 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
     });
   }
 
+  //Validar la existencia de un usuario, en una db, con un correo y password determinado.
   async validate(email: string, password: string) {
     const user = await this.authService.validateUser(email, password);
     if (!user) {

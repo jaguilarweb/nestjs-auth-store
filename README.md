@@ -187,7 +187,26 @@ Ahora debemos crear el metodo para crear el jwt en el servicio.
 
   Ahora debemos crear el método para validar el jwt en los endpoint, para lo anterior crearemos una strategy y un guardian.
 
-
+Nota: Cuando la inyección viene en el constructor, debemos utilizar el Inject de '@nestjs/common'.
   
+```ts
+export class LocalStrategy extends PassportStrategy(Strategy, 'jwt') {
+  // recibir token y desencriptarlo y darle permiso
+  constructor(@Inject(config.KEY) configService: ConfigType<typeof config>) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), //Extraerlo de la cabecera con la opción Bearer
+      ignoreExpiration: false,  //No ignorar la expiración del token
+      secretOrKey: configService.jwtSecret,
+    });
+  }
 
+  //Una vez desencriptado retorna el payload tipado con un sub y password
+  validate(payload: PayloadToken) {
+    return payload;
+  }
+}
+```
 
+Ahora lo importamos en el archivo de auth module, y lo agregamos dentro de los providers.
+
+Luego creamos un Guard.
