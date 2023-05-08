@@ -218,3 +218,42 @@ export class ProductsController {
   constructor(private productsService: ProductsService) {}
 }
 ```
+
+### Custom Guard
+
+En el caso que requiramos exeptuar algunos endpoint del guard que exige el token jwt, extenderemos un guard personalizado:
+
+```ts
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  constructor(private reflector: Reflector) {
+    super();
+  }
+
+  canActivate(context: ExecutionContext) {
+    const isPublic = this.reflector.get(IS_PUBLIC_KEY, context.getHandler());
+    if (isPublic) {
+      return true;
+    }
+    return super.canActivate(context);
+  }
+}
+```
+
+Implementación en el controller:
+
+```ts
+@UseGuards(JwtAuthGuard) //Implementamos el Guard personalizado que exige el token si no existe el decorador @IsPublic.
+@ApiTags('products')
+@Controller('products')
+export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+
+  @Public() //Si se encuentra presente este decorador, no se exigirá el token
+  @Get()
+  getProducts() {
+    return this.productsService.findAll();
+  }
+}
+  ```
+  

@@ -12,26 +12,27 @@ import {
   ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
-
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+//import { AuthGuard } from '@nestjs/passport';
+
 import { ProductsService } from '../services/products.service';
 import {
   CreateProductDtos,
   UpdateProductDtos,
   FilterProductDto,
 } from '../dtos/product.dtos';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Public } from 'src/auth/decorators/public.decorator';
 
-@UseGuards(AuthGuard('jwt'))
+//@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
-  //Endpoints, todos antecedidos por http://localhost:3000/products/
-  //El manejo de HttpsCode y Status es opcional según el proyecto.
+  @Public()
   @Get()
-  @HttpCode(HttpStatus.OK)
   getProducts() {
     return this.productsService.findAll();
   }
@@ -52,8 +53,8 @@ export class ProductsController {
   //Estamos recibiendo parametros en forma de string,
   //por lo que usamos un pipe para transformar la id en número.
   //Y luego puedo cambiar el tipeo de id: string por id:number.
+  @Public()
   @Get(':id')
-  @HttpCode(HttpStatus.ACCEPTED)
   getProduct(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
   }
