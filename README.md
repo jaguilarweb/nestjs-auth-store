@@ -17,6 +17,18 @@ Este curso incorpora la autenticación con Passport y JWT al store que hemos ido
 - Docker
 - Postman
 
+## Comandos de uso frecuente
+```bash
+NODE_ENV=dev npm run start:dev
+```
+Comando para ver los puertos usados en MAC
+```bash
+lsof -i -P | grep -i listen
+```
+
+Configuración Server: **172.18.0.2**
+
+
 
 ## Guards
 
@@ -25,11 +37,6 @@ Esto a menudo se denomina como autorización. La Autorización (y su prima la Au
 
 Pero los middleware, por naturaleza, son tontos. No saben cuál manejador será ejecutado después de llamar a la función 'next()'. Por otra parte, los Guardianes tienen acceso a la instancia 'ExecutionContext' y, por lo tanto, saben exactamente qué es lo siguiente que será ejecutado. 
 
-NODE_ENV=dev npm run start:dev
-Configuración Server: 172.18.0.2
-
-Comando para ver los puertos usados en MAC
-lsof -i -P | grep -i listen
 
 ## Hashing de contraseñas TypeORM
 
@@ -74,15 +81,113 @@ npm install --save @nestjs/jwt passport-jwt
 npm install --save-dev @types/passport-jwt
 ```
 
-## Configuración de JWT
+## Implementación de JWT
 
-Para configurar el JWT, se debe crear un archivo llamado jwt.config.ts en la carpeta auth, con el siguiente contenido:
+Luego de instalar las librerias, importamos el módulo de jwt en el archivo auth module:
+  
+  ```bash
+  import { JwtModule } from '@nestjs/jwt';
+  ```
 
-```bash
-import { registerAs } from '@nestjs/config';
+Luego, en el mismo archivo, agregamos el módulo de jwt en el array de imports y le damos la siguiente configuración:
 
-export default registerAs('jwt', () => ({
-  secret: process.env.JWT_SECRET,
-  expiresIn: process.env.JWT_EXPIRES_IN,
-}));
+```ts
+imports: [
+    UsersModule,
+    PassportModule,
+    JwtModule.registerAsync({ //Async nos permite usar useFactory
+      inject: [config.KEY],
+      useFactory: (configService: ConfigType<typeof config>) => {
+        return {
+          secret: configService.jwtSecret, //Leemos desde una variable de entorno el valor
+          signOptions: {
+            expiresIn: '10d', //tiempo de expiración del token
+          },
+        };
+      },
+    }),
+  ],
+  ```
+
+Hay estrategias que permiten hacer un refresh del token (actualización), de ese modo los tiempos de expiración se limitan a segundos. Pero no lo veremos en este contenido. 
+Posibles referencias: [link](https://wanago.io/2020/09/21/api-nestjs-refresh-tokens-jwt/)
+
+Debemos agregar la variable de entorno a los archivos de entornos '.env', etc.
+
+Luego agregamos en el archivo config.ts, el archivo de configuración de variables de entorno, este item:
+
+```ts
+jwtSecret: process.env.JWT_SECRET,
 ```
+
+También podemos validarlo en el modulo app module:
+  
+  ```ts
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: environments[process.env.NODE_ENV] || '.env',
+      load: [config],
+      isGlobal: true,
+      validationSchema: Joi.object({
+        API_KEY: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(), //Validamos para que no se olvide incorporarlo
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+      }),
+    }),
+    HttpModule,
+    UsersModule,
+    ProductsModule,
+    DatabaseModule,
+    AuthModule,
+  ],
+  ```
+
+Con esta configuración ya podemos leer y generar nuestro jwt desde el servicio:
+
+```ts
+@Injectable()
+export class AuthService {
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
+
+  login(user: any) {
+    const payload = { email: user.email, sub: user.userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+}
+```
+
+Ahora debemos crear el metodo para crear el jwt en el servicio.
+  
+  ```ts
+  generateJWT(user: UserEntity) {
+    const payload: PayloadToken = { role: user.role, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+      user,
+    };
+  }
+  ```
+
+  Ahora lo llamamos en el controlador:
+
+  ```ts
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  login(@Req() req: Request) {
+    const user = req.user as UserEntity;
+    return this.authService.generateJWT(user);
+  }
+  ```
+
+  Ahora debemos crear el método para validar el jwt en los endpoint, para lo anterior crearemos una strategy y un guardian.
+
+
+  
+
+
