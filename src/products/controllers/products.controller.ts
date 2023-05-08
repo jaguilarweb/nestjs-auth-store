@@ -10,9 +10,11 @@ import {
   HttpStatus,
   HttpCode,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from '../services/products.service';
 import {
   CreateProductDtos,
@@ -20,6 +22,7 @@ import {
   FilterProductDto,
 } from '../dtos/product.dtos';
 
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
@@ -34,7 +37,7 @@ export class ProductsController {
   }
 
   @Get('queries')
-  @ApiOperation({ summary: 'Lista de productos paginada' })
+  @ApiOperation({ summary: 'Lista de productos' })
   getProductsQuery(@Query() params: FilterProductDto) {
     return this.productsService.findAll(params);
   }

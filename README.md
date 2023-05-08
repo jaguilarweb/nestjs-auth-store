@@ -209,4 +209,12 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'jwt') {
 
 Ahora lo importamos en el archivo de auth module, y lo agregamos dentro de los providers.
 
-Luego creamos un Guard.
+Luego protegemos todos los endpoint, por ejemplo de product, con un guard usando la estrategia de jwt.
+
+```ts
+@UseGuards(AuthGuard('jwt'))
+@Controller('products')
+export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+}
+```
