@@ -52,13 +52,13 @@ export class UsersService {
       const customer = await this.customersService.findOne(payload.customerId);
       newUser.customer = customer;
     }
-    return this.userRepo.save(newUser);
+    return await this.userRepo.save(newUser);
   }
 
   async update(id: number, payload: UpdateUserDto) {
     const user = await this.userRepo.findOneBy({ id });
     this.userRepo.merge(user, payload);
-    return this.userRepo.save(user);
+    return await this.userRepo.save(user);
   }
 
   async delete(id: number) {
@@ -66,7 +66,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
-    return this.userRepo.delete(user);
+    return await this.userRepo.delete(user);
   }
 
   /*   async getOrdersByUser(id: number) {

@@ -7,8 +7,6 @@ import {
   Body,
   Param,
   Query,
-  HttpStatus,
-  HttpCode,
   ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
@@ -22,10 +20,13 @@ import {
   FilterProductDto,
 } from '../dtos/product.dtos';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/models/roles.model';
 
 //@UseGuards(AuthGuard('jwt'))
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
@@ -59,6 +60,7 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @Roles(Role.ADMIN)
   @Post()
   create(@Body() payload: CreateProductDtos) {
     return this.productsService.create(payload);

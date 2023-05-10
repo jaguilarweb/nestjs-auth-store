@@ -256,4 +256,59 @@ export class ProductsController {
   }
 }
   ```
-  
+
+### Control de roles
+
+1 - Definiremos los roles, mediante un model.
+
+Creamos un archivo en el directorio auth/models.
+
+2.- Ahora creamos un decorador para los roles.
+
+```ts
+export class RolesGuard implements CanActivate {
+  //Solo cuando hay herencia se utiliza el super();
+  constructor(private reflector: Reflector) {}
+
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const roles = this.reflector.get<Role[]>(ROLES_KEY, context.getHandler());
+    if (!roles) {
+      //No necesito validación de roles, por tanto, lo deja pasar.
+      return true;
+    }
+    // output ['admin', 'customer']; Llega un array con el contexto y se pueden enviar varios, definidos en el controller.
+    const request = context.switchToHttp().getRequest();
+    const user = request.user as PayloadToken;
+    // output {role: 'admin', sub:1212}
+    const isAuth = roles.some((role) => role === user.role);
+    if (!isAuth) {
+      throw new UnauthorizedException('You dont have permission to access');
+    }
+    return isAuth;
+  }
+}
+```
+
+3.- Implementamos los guardianes en el endpoint
+
+```ts
+@UseGuards(JwtAuthGuard, RolesGuard) //Aquí podemos definir más de un guardian y todos los endpoint pasan por estos guardianes
+@ApiTags('products')
+@Controller('products')
+export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+}
+```
+
+E implementamos el decorador en el o los endpoint donde queremos definir los roles
+
+```ts
+  @Roles(Role.ADMIN) //Podriamos definir mas de un rol ejm (Role.ADMIN, Role.CUSTOMER)
+  @Post()
+  create(@Body() payload: CreateProductDtos) {
+    return this.productsService.create(payload);
+  }
+```
+
